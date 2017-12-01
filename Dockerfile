@@ -13,16 +13,10 @@ RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/10/main/pg_hba.c
     echo "listen_addresses='*'" >> /etc/postgresql/10/main/postgresql.conf && \
     echo "listen_addresses='*'" >> /var/lib/postgresql/10/main/postgresql.conf && \
     echo "host all  all    0.0.0.0/0  trust" >> /var/lib/postgresql/10/main/pg_hba.conf
+EXPOSE 5432
 
 USER postgres
 RUN /usr/lib/postgresql/10/bin/pg_ctl -D /var/lib/postgresql/10/main -l /tmp/logfile start
-
-USER root
-EXPOSE 5432
-RUN wget http://download.osgeo.org/postgis/source/postgis-2.4.2.tar.gz && tar -xvzf postgis-2.4.2.tar.gz
-RUN cd postgis-2.4.2 && ./configure && make && make install
-
-USER postgres
 RUN createdb -E UTF-8 -T template0 epri
 RUN psql -c "\set ON_ERROR_STOP on; CREATE EXTENSION postgis;"
 #This 123 password will be removed after code moves from dev
