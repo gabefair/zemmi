@@ -14,4 +14,6 @@ sleep 5 # just for sure
 su - postgres -c "psql -c \"CREATE EXTENSION IF NOT EXISTS postgis\""
 echo database up and running
 
+docker images -q -f dangling=true | xargs docker rmi #clean up any failures or unneeded layers
+
 wait $!
