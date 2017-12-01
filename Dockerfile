@@ -12,7 +12,7 @@ RUN apt -y install postgresql-10 gdal-bin netcat build-essential libxml2 libxml2
 RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/10/main/pg_hba.conf && \
     echo "listen_addresses='*'" >> /etc/postgresql/10/main/postgresql.conf && \
     echo "listen_addresses='*'" >> /var/lib/postgresql/10/main/postgresql.conf && \
-    printf "host all  all    0.0.0.0/0  trust\n local all all  0.0.0.0/0  trust EOF" >> /var/lib/postgresql/10/main/pg_hba.conf && \
+    printf "host all  all    0.0.0.0/0  trust\nlocal all all    0.0.0.0/0  trust" >> /var/lib/postgresql/10/main/pg_hba.conf && \
     echo "map-name root postgres" >> /var/lib/postgresql/10/main/pg_ident.conf
 
 USER postgres
