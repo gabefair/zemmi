@@ -14,7 +14,6 @@ RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/10/main/pg_hba.c
     echo "listen_addresses='*'" >> /var/lib/postgresql/10/main/postgresql.conf && \
     printf "host all  all    0.0.0.0/0  trust" >> /var/lib/postgresql/10/main/pg_hba.conf && \
     echo "map-name root postgres" >> /var/lib/postgresql/10/main/pg_ident.conf
-EXPOSE 5432
 
 USER postgres
 RUN /usr/lib/postgresql/10/bin/pg_ctl -D /var/lib/postgresql/10/main -l /tmp/logfile start && \
@@ -29,6 +28,7 @@ USER postgres
 RUN service postgresql start && psql -d -c "CREATE EXTENSION postgis; CREATE EXTENSION hstore; CREATE EXTENSION adminpack;"
 
 USER root
+EXPOSE 5432
 COPY start.postgis.sh /start.postgis.sh
 RUN chmod 0755 /start.postgis.sh
 
