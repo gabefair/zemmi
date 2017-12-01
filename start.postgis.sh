@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DATADIR="/var/lib/postgresql/9.6/main"
-CONF="/etc/postgresql/9.6/main/postgresql.conf"
-POSTGRES="/usr/lib/postgresql/9.6/bin/postgres"
+DATADIR="/var/lib/postgresql/10/main"
+CONF="/etc/postgresql/10/main/postgresql.conf"
+POSTGRES="/usr/lib/postgresql/10/bin/postgres"
 
 su postgres sh -c "$POSTGRES -D $DATADIR -c config_file=$CONF" &
 until nc -z localhost 5432;
