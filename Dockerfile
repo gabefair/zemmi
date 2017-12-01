@@ -15,12 +15,16 @@ RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/10/main/pg_hba.c
     echo "host all  all    0.0.0.0/0  trust" >> /var/lib/postgresql/10/main/pg_hba.conf
 EXPOSE 5432
 
+
+
+USER postgres
 RUN /usr/lib/postgresql/10/bin/pg_ctl -D /var/lib/postgresql/10/main -l /tmp/logfile start
 RUN psql -c "\set ON_ERROR_STOP on; CREATE EXTENSION postgis;"
 
-USER postgres
-
+USER root
 RUN createdb -E UTF-8 -T template0 epri
+
+USER postgres
 #This 123 password will be removed after code moves from dev
 RUN service postgresql start && psql -d -c "CREATE EXTENSION postgis; CREATE EXTENSION hstore; CREATE EXTENSION adminpack; CREATE USER root SUPERUSER PASSWORD '123'; grant all privileges on database epri to root;"
 
