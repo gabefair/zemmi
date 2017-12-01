@@ -12,10 +12,9 @@ RUN apt -y install postgresql-10 gdal-bin netcat build-essential libxml2 libxml2
 RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/10/main/pg_hba.conf && \
     echo "listen_addresses='*'" >> /etc/postgresql/10/main/postgresql.conf && \
     echo "listen_addresses='*'" >> /var/lib/postgresql/10/main/postgresql.conf && \
-    echo "host all  all    0.0.0.0/0  trust" >> /var/lib/postgresql/10/main/pg_hba.conf
+    echo "host all  all    0.0.0.0/0  trust" >> /var/lib/postgresql/10/main/pg_hba.conf && \
+    echo "map-name root postgres" >> /var/lib/postgresql/10/main/pg_ident.conf
 EXPOSE 5432
-
-
 
 USER postgres
 RUN /usr/lib/postgresql/10/bin/pg_ctl -D /var/lib/postgresql/10/main -l /tmp/logfile start
@@ -26,7 +25,8 @@ RUN createdb -E UTF-8 -T template0 epri
 
 USER postgres
 #This 123 password will be removed after code moves from dev
-RUN service postgresql start && psql -d -c "CREATE EXTENSION postgis; CREATE EXTENSION hstore; CREATE EXTENSION adminpack; CREATE USER root SUPERUSER PASSWORD '123'; grant all privileges on database epri to root;"
+#RUN service postgresql start && psql -d -c "CREATE EXTENSION postgis; CREATE EXTENSION hstore; CREATE EXTENSION adminpack; CREATE USER root SUPERUSER PASSWORD '123'; grant all privileges on database epri to root;"
+RUN service postgresql start && psql -d -c "CREATE EXTENSION postgis; CREATE EXTENSION hstore; CREATE EXTENSION adminpack;"
 
 USER root
 COPY start.postgis.sh /start.postgis.sh
