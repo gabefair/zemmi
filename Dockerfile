@@ -17,8 +17,8 @@ RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/10/main/pg_hba.c
 EXPOSE 5432
 
 USER postgres
-RUN /usr/lib/postgresql/10/bin/pg_ctl -D /var/lib/postgresql/10/main -l /tmp/logfile start
-RUN psql -c "\set ON_ERROR_STOP on; CREATE EXTENSION postgis;"
+RUN /usr/lib/postgresql/10/bin/pg_ctl -D /var/lib/postgresql/10/main -l /tmp/logfile start && \
+    psql -c "\set ON_ERROR_STOP on; CREATE EXTENSION postgis;"
 
 USER root
 RUN createdb -E UTF-8 -T template0 epri
