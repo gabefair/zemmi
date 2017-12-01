@@ -7,7 +7,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ zesty-pgdg main" > /etc/a
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt install wget ca-certificates
 RUN apt update
-RUN apt -y install postgresql-10 gdal-bin netcat build-essential libxml2 libxml2-dev libgeos-3.5.1 libgdal-dev gdal-bin libgdal20 libgeos-dev libprotobuf-c1 libprotobuf-c-dev libprotobuf-dev protobuf-compiler protobuf-c-compiler postgresql-10-postgis-scripts --allow-unauthenticated
+RUN apt -y install postgresql-10 gdal-bin netcat build-essential libxml2 libxml2-dev libgeos-3.5.1 libgdal-dev gdal-bin libgdal20 libgeos-dev libprotobuf-c1 libprotobuf-c-dev libprotobuf-dev protobuf-compiler protobuf-c-compiler postgis postgresql-10-postgis-scripts --allow-unauthenticated
 
 RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/10/main/pg_hba.conf && \
     echo "listen_addresses='*'" >> /etc/postgresql/10/main/postgresql.conf && \
