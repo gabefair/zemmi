@@ -10,7 +10,7 @@ RUN apt update
 RUN apt -y install postgresql-10 gdal-bin
 
 USER postgres
-RUN /usr/lib/postgresql/10/bin/pg_ctl -D /var/lib/postgresql/10/main
+RUN /usr/lib/postgresql/10/bin/pg_ctl -D /var/lib/postgresql/10/main -l /dev/stdout
 
 USER root
 RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/10/main/pg_hba.conf && \
